@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตรวจสอบคะแนน</title>
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        form {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            display: block;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result.pass {
+            color: green;
+        }
+
+        .result.fail {
+            color: red;
+        }
+
+        .result.not-found {
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+    <h1>ตรวจสอบคะแนน</h1>
+    <form id="checkForm">
+        <label for="classInput">ชั้นและห้อง (เช่น ม2/1):</label>
+        <input type="text" id="classInput" placeholder="กรอกชั้นและห้อง เช่น ม2/1" required>
+
+        <label for="nameInput">ชื่อและนามสกุล:</label>
+        <input type="text" id="nameInput" placeholder="กรอกชื่อและนามสกุล" required>
+
+        <button type="button" onclick="checkScore()">ตรวจสอบ</button>
+    </form>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        const students = {
+            "ม2/1": {
+                "ปฐมพงษ์ ฦาชา": 10,
+                "Jam": 20
+            },
+            "ม2/2": {
+                "Bas": 50,
+                "Jam": 20
+            }
+        };
+
+        function checkScore() {
+            const classInput = document.getElementById("classInput").value.trim();
+            const nameInput = document.getElementById("nameInput").value.trim();
+            const resultDiv = document.getElementById("result");
+
+            if (students[classInput]) {
+                const studentScore = students[classInput][nameInput];
+                if (studentScore !== undefined) {
+                    if (studentScore >= 50) {
+                        resultDiv.textContent = `${nameInput}: คเแนน ${studentScore} ใน ${classInput}: ผ่าน`;
+                        resultDiv.className = "result pass";
+                    } else {
+                        resultDiv.textContent = `${nameInput}: คะแนน ${studentScore} ใน ${classInput}: ตก`;
+                        resultDiv.className = "result fail";
+                    }
+                } else {
+                    resultDiv.textContent = `ไม่พบข้อมูลของ "${nameInput}" ใน "${classInput}"`;
+                    resultDiv.className = "result not-found";
+                }
+            } else {
+                resultDiv.textContent = `ไม่พบข้อมูลของชั้น "${classInput}"`;
+                resultDiv.className = "result not-found";
+            }
+        }
+    </script>
+</body>
+</html>
