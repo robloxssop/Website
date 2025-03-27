@@ -2,10 +2,14 @@
 -- Version: 3.2
 
 -- Instances:
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
 
 local MoonUI = {
 	MoonUI = Instance.new("ScreenGui"),
-	MoonFrame = Instance.new("Frame"),
+MoonUI.Parent = playerGui,  -- เปลี่ยนให้ GUI อยู่ใน PlayerGui
 	TitleBar = Instance.new("Frame"),
 	Title = Instance.new("TextLabel"),
 	UICorner = Instance.new("UICorner"),
